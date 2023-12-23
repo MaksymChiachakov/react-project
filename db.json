@@ -1,0 +1,20 @@
+{
+  "contacts": [
+    {
+      "name": "Sasha",
+      "lastName": "Kuderska",
+      "age": 17,
+      "id": 1
+    },
+    {
+      "name": "Maksym",
+      "lastName": "Chichakov",
+      "age": 16,
+      "id": 2
+    },
+    {
+      "id": 3,
+      "email": "mchiachakov@gmail.com"
+    }
+  ]
+}
