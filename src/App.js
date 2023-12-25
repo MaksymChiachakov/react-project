@@ -4,6 +4,7 @@ import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } fro
 import PrivateRouter from './components/privateRouter/privateRouter';
 import { useMutation, useQuery } from 'react-query';
 import { getAllUsers } from './components/pages/api/api';
+import { AuthContext } from './context/AuthContext';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
   const SingleContact = lazy(() => import('./components/pages/singleContact/singleContact'))
   const Layout = lazy(() => import('./components/layout/layout'))
   const Login = lazy(() => import('./components/pages/login/login'))
+  const Register = lazy(() => import('./components/pages/register/register'))
 
   const [loginUser, setLoginUser] = useState({ username: null, email: null })
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -28,26 +30,30 @@ function App() {
     refetchOnWindowFocus: false
   })
 
+  // npm install @reduxjs/toolkit
 
   return (
-    <div className="App">
-      <main>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path='/' element={<Layout isFetching={isFetching} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}>
-              <Route index element={<Home />} />
-              <Route path='/contacts' element={<PrivateRouter isAuthenticated={isAuthenticated} ><Contacts /></PrivateRouter>} />
-              {/* <Route path='/contacts' element={<Contacts />} /> */}
-              <Route path='/contacts/:id' element={<PrivateRouter isAuthenticated={isAuthenticated} ><SingleContact /></PrivateRouter>} />
-              <Route path='/about' element={<PrivateRouter isAuthenticated={isAuthenticated} ><About /></PrivateRouter>} />
-              <Route path='/404' element={<NotFound />} />
-              <Route path='/login' element={<Login setIsAuthenticated={setIsAuthenticated} usersList={usersList} />} />
-              <Route path='*' element={<Navigate to='/404' />} />
-            </Route>
-          </Routes>
-        </Suspense>
-      </main>
-    </div>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+      <div className="App">
+        <main>
+          <Suspense fallback={<div className='loading'>Loading...</div>}>
+            <Routes>
+              <Route path='/' element={<Layout isFetching={isFetching} />}>
+                <Route index element={<Home />} />
+                <Route path='/contacts' element={<PrivateRouter  ><Contacts /></PrivateRouter>} />
+                {/* <Route path='/contacts' element={<Contacts />} /> */}
+                <Route path='/contacts/:id' element={<PrivateRouter ><SingleContact /></PrivateRouter>} />
+                <Route path='/about' element={<PrivateRouter  ><About /></PrivateRouter>} />
+                <Route path='/404' element={<NotFound />} />
+                <Route path='/login' element={<Login usersList={usersList} />} />
+                <Route path='*' element={<Navigate to='/404' />} />
+                <Route path='/register' element={<Register usersList={usersList} />} />
+              </Route>
+            </Routes>
+          </Suspense>
+        </main>
+      </div>
+    </AuthContext.Provider>
   );
 }
 

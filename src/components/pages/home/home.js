@@ -5,7 +5,7 @@ const Home = () => {
     return (
         <>
             <h1 style={{ textAlign: 'center' }}>Home</h1>
-            <button onClick={() => navigate(-1)}>Повернутися назад</button>
+            <button className="go-back-button" onClick={() => navigate(-1)}>Go Back</button>
         </>
     )
 }

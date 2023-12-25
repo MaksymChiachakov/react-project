@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom"
+import { AuthContext } from "../../context/AuthContext";
 
-const Layout = ({ isFetching, setIsAuthenticated, isAuthenticated }) => {
+const Layout = ({ isFetching }) => {
+
+    const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext)
 
     return (
         <>
@@ -10,19 +14,24 @@ const Layout = ({ isFetching, setIsAuthenticated, isAuthenticated }) => {
                     <>
                         <NavLink to='/contacts' className='link'>Contacts</NavLink>
                         <NavLink to='/about' className='link'>About</NavLink>
-                        <Link to='/login' onClick={() => {
+                        <Link to='/login' className="link-exit" onClick={() => {
                             setIsAuthenticated(false);
                             localStorage.removeItem('email');
                         }}
                         >
-                            Log Out
+                            Exit
                         </Link>
                     </>
                 )}
                 {!isAuthenticated && (
-                    <NavLink to='/login' className='link'>
-                        Login
-                    </NavLink>
+                    <div className="container-login">
+                        <NavLink to='/login' className='link-imp'>
+                            Sign In
+                        </NavLink>
+                        <NavLink to='/register' className='link-imp'>
+                            Sign Up
+                        </NavLink>
+                    </div>
                 )}
 
             </header>

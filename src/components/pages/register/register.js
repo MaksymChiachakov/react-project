@@ -2,8 +2,9 @@ import { useContext, useState } from "react";
 import { Button, Form, Input } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
+import { addUser } from "../api/api";
 
-const Login = ({ usersList }) => {
+const Register = ({ usersList }) => {
     const [loginUser, setLoginUser] = useState({});
     const navigate = useNavigate();
     const { setIsAuthenticated } = useContext(AuthContext);
@@ -11,20 +12,25 @@ const Login = ({ usersList }) => {
     const onFinish = (values) => {
         const user = usersList.find((user) => user.email === values.email);
 
-        if (user && user.email.toLowerCase() === values.email.toLowerCase()) {
+        if (!user || user.email.toLowerCase() !== values.email.toLowerCase()) {
+            const payload = {
+                email: values.email
+            };
+            addUser(payload);
             localStorage.setItem('email', values.email);
+
             setIsAuthenticated(true);
             navigate('/contacts', { replace: true });
         } else {
-            setLoginUser(null);
+            navigate('/login', { replace: true });
         }
     };
 
     return (
         <div className="forms">
-            <h1 style={{ textAlign: 'center' }}>Sign In</h1><br />
+            <h1 style={{ textAlign: 'center' }}>Sign Up</h1><br />
             <div>
-                <Form name='normal_login' onFinish={onFinish} >
+                <Form name='normal_login' onFinish={onFinish}>
                     <Form.Item
                         name='email'
                         rules={[{ required: true, message: 'Please input your email' }]}
@@ -36,12 +42,12 @@ const Login = ({ usersList }) => {
                             htmlType='submit'
                             className='form-button'
                         >
-                            Sign In
+                            Sign Up
                         </Button>
                     </Form.Item>
                 </Form>
                 {!loginUser && (
-                    <p className="login-error-message">Такого користувача не існує, він повинен пройти реєстрацію</p>
+                    <p className="login-error-message">Такий користувач уже існує</p>
                 )}
                 <button className="go-back-button" onClick={() => navigate(-1)}>Go Back</button>
             </div>
@@ -49,4 +55,4 @@ const Login = ({ usersList }) => {
     );
 };
 
-export default Login;
+export default Register;

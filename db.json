@@ -11,10 +11,24 @@
       "lastName": "Chichakov",
       "age": 16,
       "id": 2
+    }
+  ],
+  "auth": [
+    {
+      "id": 1,
+      "email": "mchiachakov@gmail.com"
     },
     {
-      "id": 3,
-      "email": "mchiachakov@gmail.com"
+      "email": "mchiachakdov@gmail.com",
+      "id": 2
+    },
+    {
+      "email": "mchiachadsakov@gmail.com",
+      "id": 3
+    },
+    {
+      "email": "mchidhakov@gmail.com",
+      "id": 4
     }
   ]
 }

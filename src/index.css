@@ -12,9 +12,58 @@ code {
     monospace;
 }
 
+ul {
+  list-style: none;
+}
+
+.loading {
+  position: fixed;
+  font-size: 36px;
+  top: 450px;
+  left: 900px;
+
+}
+
 /* Change the place after */
 .link.active {
-  color: blue;
+  color: bisque;
+}
+
+.link-exit {
+  font-size: 24px;
+  color: white;
+  position: fixed;
+  right: 54px;
+  top: 32px;
+  height: 30px;
+  width: 50px;
+
+  &:hover {
+    color: bisque;
+  }
+}
+
+.forms {
+  margin-top: 200px;
+}
+
+.container-login {
+  position: fixed;
+  right: 20px;
+  top: 32px;
+  height: 30px;
+  width: 210px;
+
+}
+
+.link-imp {
+  font-size: 24px;
+  color: white;
+  margin-right: 24px;
+
+  &:hover {
+    color: bisque;
+  }
 }
 
 a {
@@ -22,7 +71,7 @@ a {
 }
 
 .link {
-  margin-right: 16px;
+  margin-right: 32px;
   font-size: 32px;
   color: white;
 
@@ -35,7 +84,7 @@ a {
   border-color: black;
   background-color: #282c34;
   color: white;
-  margin: 0 auto;
+  margin: 16px auto;
 
   &:hover {
     background-color: transparent;
@@ -67,15 +116,39 @@ a {
 
 .form-input {
   margin: 0 auto;
-  width: 160px;
+  width: 200px;
   height: 24px;
   border-radius: 8px;
-  background-color: #282c34;
-  color: white;
+  color: #282c34;
+
   padding: 5px;
 
   &:focus {
     background-color: #fff;
     color: #282c34;
+  }
+}
+
+.login-error-message {
+  color: red;
+}
+
+.go-back-button {
+  border-radius: 16px;
+  width: 150px;
+  height: 45px;
+  border-color: black;
+  background-color: #282c34;
+  color: white;
+  position: fixed;
+  left: 24px;
+  top: 120px;
+  height: 45px;
+  width: 150px;
+
+  &:hover {
+    background-color: transparent;
+    color: #282c34;
+    cursor: pointer;
   }
 }
