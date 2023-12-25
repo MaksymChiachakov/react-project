@@ -2,11 +2,14 @@ import { useContext, useState } from "react";
 import { Button, Form, Input } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
+import { useSelector } from "react-redux";
 
-const Login = ({ usersList }) => {
+const Login = () => {
     const [loginUser, setLoginUser] = useState({});
     const navigate = useNavigate();
     const { setIsAuthenticated } = useContext(AuthContext);
+    const usersList = useSelector((state) => state.users.users)
+
 
     const onFinish = (values) => {
         const user = usersList.find((user) => user.email === values.email);

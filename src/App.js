@@ -1,10 +1,10 @@
 import './App.css';
-import { Link, Navigate, Route, Routes } from 'react-router-dom';
-import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import PrivateRouter from './components/privateRouter/privateRouter';
-import { useMutation, useQuery } from 'react-query';
-import { getAllUsers } from './components/pages/api/api';
 import { AuthContext } from './context/AuthContext';
+import { useDispatch } from 'react-redux';
+import { fetchUsers } from './redux/users/userSlice';
 
 function App() {
 
@@ -22,13 +22,21 @@ function App() {
     !!localStorage.getItem('email')
   )
 
+  const dispatch = useDispatch()
 
-  const { data: usersList, isFetching } = useQuery({
-    queryKey: ['usersList'],
-    queryFn: getAllUsers,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false
-  })
+  // const isLoading = useSelector(state => state.users.loading)
+
+
+  // const { data: usersList, isFetching } = useQuery({
+  //   queryKey: ['usersList'],
+  //   queryFn: getAllUsers,
+  //   refetchOnReconnect: false,
+  //   refetchOnWindowFocus: false
+  // })
+
+  useEffect(() => {
+    dispatch(fetchUsers())
+  }, [dispatch])
 
   // npm install @reduxjs/toolkit
 
@@ -38,16 +46,16 @@ function App() {
         <main>
           <Suspense fallback={<div className='loading'>Loading...</div>}>
             <Routes>
-              <Route path='/' element={<Layout isFetching={isFetching} />}>
+              <Route path='/' element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path='/contacts' element={<PrivateRouter  ><Contacts /></PrivateRouter>} />
                 {/* <Route path='/contacts' element={<Contacts />} /> */}
                 <Route path='/contacts/:id' element={<PrivateRouter ><SingleContact /></PrivateRouter>} />
                 <Route path='/about' element={<PrivateRouter  ><About /></PrivateRouter>} />
                 <Route path='/404' element={<NotFound />} />
-                <Route path='/login' element={<Login usersList={usersList} />} />
+                <Route path='/login' element={<Login />} />
                 <Route path='*' element={<Navigate to='/404' />} />
-                <Route path='/register' element={<Register usersList={usersList} />} />
+                <Route path='/register' element={<Register />} />
               </Route>
             </Routes>
           </Suspense>

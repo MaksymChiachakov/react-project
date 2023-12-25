@@ -37,3 +37,5 @@ export const getAllUsers = async () => {
     const contacts = await axios.get('auth')
     return contacts.data
 }
+
+// REDUX TOOLKIT

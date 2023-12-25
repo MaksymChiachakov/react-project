@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
 
-const Layout = ({ isFetching }) => {
+const Layout = () => {
 
     const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext)
+    const isFetching = useSelector(state => state.users.loading)
 
     return (
         <>
